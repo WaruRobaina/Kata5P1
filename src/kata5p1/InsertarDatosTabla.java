@@ -2,15 +2,14 @@ package kata5p1;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
 
-public class SelectApp {
-     private Connection connect() {
+public class InsertarDatosTabla {
+    private Connection connect() {
         String url = "jdbc:sqlite:KATA5.db";
         Connection conn = null;
-        try {
+        try {   
             conn = DriverManager.getConnection(url);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -18,17 +17,16 @@ public class SelectApp {
         return conn;
     }
     
-    public void selectAll(){
-        String sql = "SELECT * FROM EMAIL";
+    public void insert(String email) {
+        String sql = "INSERT INTO EMAIL(Mail) VALUES(?)";
         try (Connection conn = this.connect();
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery(sql)){
-        while (rs.next()) {
-            System.out.println(rs.getInt("Id") + "\t" +
-            rs.getString("Mail") + "\t");
-        }
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {    
+        pstmt.setString(1, email);
+        pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-    }    
+    }
+    
+    
 }
