@@ -20,15 +20,13 @@ public class SelectApp {
     }
     
     public void selectAll(){
-        String sql = "SELECT * FROM PEOPLE";
+        String sql = "SELECT * FROM EMAIL";
         try (Connection conn = this.connect();
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery(sql)){
         while (rs.next()) {
-            System.out.println(rs.getInt("id") + "\t" +
-            rs.getString("Name") + "\t" +
-            rs.getString("Apellidos") + "\t" +
-            rs.getString("Departamento") + "\t");
+            System.out.println(rs.getInt("Id") + "\t" +
+            rs.getString("Mail") + "\t");
         }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
